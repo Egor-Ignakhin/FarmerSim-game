@@ -1,8 +1,9 @@
 ﻿namespace FarmerSim.Invnentory
 {
-    internal interface IInventoryController
+    public interface IInventoryController
     {
         bool IsNotFilled();
         void PushItem(IInventoryItem item);
+        bool HaveItems<T>();
     }
 }

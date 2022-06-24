@@ -13,5 +13,11 @@ namespace FarmerSim.Invnentory
         int GetMaxItemsCount();
 
         bool IsNotFilled();
+
+        int GetMoneyCount();
+
+        bool HaveItems<T>();
+
+        void SellItem<T>(int moneyCount);
     }
 }

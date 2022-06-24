@@ -1,8 +1,6 @@
 ﻿
 using FarmerSim.Invnentory;
 
-using System.Collections.Generic;
-
 using UnityEngine;
 
 namespace FarmerSim.Player
@@ -11,19 +9,22 @@ namespace FarmerSim.Player
     {
         private IInventoryModel model;
 
-        [SerializeField] private List<GameObject> playerInventoryViewGMs = new List<GameObject>();
-        private readonly List<IInventoryView> playerInventoryViews = new List<IInventoryView>();
+        [SerializeField] private GameObject playerInventoryViewUIGM;
+        [SerializeField] private GameObject playerInventoryViewBoxGM;
+
+        [SerializeField] private IInventoryView playerInventoryViewUI;
+        [SerializeField] private IInventoryView playerInventoryViewBox;
 
         private void Awake()
         {
             model = new DefaultPlayerInventoryModel();
-            foreach (var viewGM in playerInventoryViewGMs)
-            {
-                IInventoryView playerInventoryView = viewGM.GetComponent<IInventoryView>();
-                playerInventoryViews.Add(playerInventoryView);
+            playerInventoryViewUI = playerInventoryViewUIGM.GetComponent<IInventoryView>();
+            playerInventoryViewBox = playerInventoryViewBoxGM.GetComponent<IInventoryView>();
 
-                playerInventoryView.Initialize(model);
-            }
+            playerInventoryViewUI.Initialize(model);
+            playerInventoryViewBox.Initialize(model);
+
+            ((BoxPlayerInventoryView)playerInventoryViewBox).OnWheatPackSelled += OnWheatPackTaked;
         }
 
         public void PushItem(IInventoryItem item)
@@ -34,6 +35,21 @@ namespace FarmerSim.Player
         public bool IsNotFilled()
         {
             return model.IsNotFilled();
+        }
+
+        public bool HaveItems<T>()
+        {
+            return model.HaveItems<T>();
+        }
+
+        private void OnWheatPackTaked(int moneyCount)
+        {
+            model.SellItem<WheatPackItem>(moneyCount);
+        }
+
+        private void OnDestroy()
+        {
+            ((BoxPlayerInventoryView)playerInventoryViewBox).OnWheatPackSelled -= OnWheatPackTaked;
         }
     }
 }

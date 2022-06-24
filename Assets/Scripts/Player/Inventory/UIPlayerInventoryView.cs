@@ -10,6 +10,7 @@ namespace FarmerSim.Player
         private IInventoryModel playerInventoryModel;
 
         [SerializeField] private TMPro.TextMeshProUGUI packsCountText;
+        [SerializeField] private TMPro.TextMeshProUGUI moneyCountText;
 
         public void Initialize(IInventoryModel inventoryModel)
         {
@@ -21,7 +22,10 @@ namespace FarmerSim.Player
         private void OnInventoryModelChanged()
         {
             var packsCount = playerInventoryModel.GetItemsCountByType<WheatPackItem>();
+            var moneyCount = playerInventoryModel.GetMoneyCount();
+
             packsCountText.SetText($"{packsCount}/{playerInventoryModel.GetMaxItemsCount()}");
+            moneyCountText.SetText($"{moneyCount}");
         }
 
         private void OnDestroy()

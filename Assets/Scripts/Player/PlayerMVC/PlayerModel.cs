@@ -1,3 +1,5 @@
+using FarmerSim.Invnentory;
+
 using System;
 
 namespace FarmerSim.Player
@@ -7,6 +9,12 @@ namespace FarmerSim.Player
         public event Action OnPlayerChanged;
         private IPlayerBehavior currentBehavior;
         private IPlayerBehavior lastPlayerBehavior;
+        private IInventoryController inventoryController;
+
+        public DefaultPlayerModel(IInventoryController inventoryController)
+        {
+            this.inventoryController = inventoryController;
+        }
 
         public IPlayerBehavior GetCurrentBehavior()
         {
@@ -25,6 +33,11 @@ namespace FarmerSim.Player
         public IPlayerBehavior GetLastBehavior()
         {
             return lastPlayerBehavior;
+        }
+
+        public bool HaveItems<T>()
+        {
+            return inventoryController.HaveItems<T>();
         }
     }
 }

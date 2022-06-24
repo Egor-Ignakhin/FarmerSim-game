@@ -24,6 +24,10 @@ namespace FarmerSim.Player
         [SerializeField] private GameObject playerKnifeGM;
         [SerializeField] private IPlayerWeapon currentWeapon;
 
+
+        [SerializeField] private PlayerInventoryController playerInventoryController;
+
+
         private void Awake()
         {
             InitializeMVC();
@@ -44,7 +48,7 @@ namespace FarmerSim.Player
 
         private void InitializeMVC()
         {
-            playerModel = new DefaultPlayerModel();
+            playerModel = new DefaultPlayerModel(playerInventoryController);
             playerView = playerViewGM.GetComponent<IPlayerView>();
 
             playerView.Initialize(playerModel);
@@ -104,6 +108,11 @@ namespace FarmerSim.Player
         public IPlayerWeapon GetCurrentWeapon()
         {
             return currentWeapon;
+        }
+
+        public bool HaveItems<T>()
+        {
+            return playerModel.HaveItems<T>();
         }
     }
 }

@@ -20,6 +20,7 @@ namespace FarmerSim.Mud
                 wheatObject.Initialize(playerInventory);
             }
         }
+
         private IEnumerator Start()
         {
             while (true)
