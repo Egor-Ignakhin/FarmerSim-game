@@ -26,9 +26,11 @@ namespace FarmerSim.Player
 
             bool behaviorIsRunning = playerBehavior is PlayerBehaviorRunning;
             bool behaviorIsWaking = playerBehavior is PlayerBehaviorWalking;
+            bool behaviorIsCutting = playerBehavior is PlayerBehaviorCutting;
 
             playerAnimator.SetBool("IsRunning", behaviorIsRunning);
             playerAnimator.SetBool("IsWalking", behaviorIsWaking);
+            playerAnimator.SetBool("IsCutting", behaviorIsCutting);
         }
 
         private void OnDestroy()

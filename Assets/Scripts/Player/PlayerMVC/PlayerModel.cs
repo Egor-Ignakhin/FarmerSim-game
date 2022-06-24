@@ -6,6 +6,7 @@ namespace FarmerSim.Player
     {
         public event Action OnPlayerChanged;
         private IPlayerBehavior currentBehavior;
+        private IPlayerBehavior lastPlayerBehavior;
 
         public IPlayerBehavior GetCurrentBehavior()
         {
@@ -14,9 +15,16 @@ namespace FarmerSim.Player
 
         public void SetCurrentBehavior(IPlayerBehavior playerBehavior)
         {
+            lastPlayerBehavior = currentBehavior;
+
             currentBehavior = playerBehavior;
 
             OnPlayerChanged?.Invoke();
+        }
+
+        public IPlayerBehavior GetLastBehavior()
+        {
+            return lastPlayerBehavior;
         }
     }
 }

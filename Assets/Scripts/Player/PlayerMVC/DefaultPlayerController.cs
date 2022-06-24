@@ -1,6 +1,4 @@
 
-using System;
-
 using UnityEngine;
 
 namespace FarmerSim.Player
@@ -21,9 +19,27 @@ namespace FarmerSim.Player
 
         [SerializeField] private CharacterController characterController;
 
+        [SerializeField] private Menu.CutWheatButton cutWheatButton;
+
+        [SerializeField] private GameObject playerKnifeGM;
+        [SerializeField] private IPlayerWeapon currentWeapon;
+
         private void Awake()
         {
             InitializeMVC();
+
+            cutWheatButton.OnPointerDownEvent += () =>
+            {
+                playerModel.SetCurrentBehavior(new PlayerBehaviorCutting());
+                currentWeapon.SetCanAttack(true);
+            };
+            cutWheatButton.OnPointerUpEvent += () =>
+            {
+                playerModel.SetCurrentBehavior(playerModel.GetLastBehavior());
+                currentWeapon.SetCanAttack(false);
+            };
+
+            currentWeapon = playerKnifeGM.GetComponent<IPlayerWeapon>();
         }
 
         private void InitializeMVC()
@@ -36,12 +52,20 @@ namespace FarmerSim.Player
 
         private void Update()
         {
+            if (playerModel.GetCurrentBehavior() is PlayerBehaviorCutting)
+                return;
+
+            OperatePlayerMovement();
+        }
+
+        private void OperatePlayerMovement()
+        {
             float horizontal = joystickManager.GetHorizontal();
             float vertical = joystickManager.GetVertical();
 
             if (vertical == 0)
             {
-                if(horizontal != 0)
+                if (horizontal != 0)
                 {
                     playerModel.SetCurrentBehavior(new PlayerBehaviorWalking());
                 }
@@ -75,6 +99,11 @@ namespace FarmerSim.Player
 
             characterController.Move(moveSpeed * Time.deltaTime * movement);
             characterController.Move(velocity);
+        }
+
+        public IPlayerWeapon GetCurrentWeapon()
+        {
+            return currentWeapon;
         }
     }
 }

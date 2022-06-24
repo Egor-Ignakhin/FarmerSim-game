@@ -8,5 +8,7 @@ namespace FarmerSim.Player
 
         IPlayerBehavior GetCurrentBehavior();
         void SetCurrentBehavior(IPlayerBehavior playerBehavior);
+
+        IPlayerBehavior GetLastBehavior();
     }
 }
