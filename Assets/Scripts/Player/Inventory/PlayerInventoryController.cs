@@ -23,8 +23,6 @@ namespace FarmerSim.Player
 
             playerInventoryViewUI.Initialize(model);
             playerInventoryViewBox.Initialize(model);
-
-            ((BoxPlayerInventoryView)playerInventoryViewBox).OnWheatPackSelled += OnWheatPackTaked;
         }
 
         public void PushItem(IInventoryItem item)
@@ -42,14 +40,9 @@ namespace FarmerSim.Player
             return model.HaveItems<T>();
         }
 
-        private void OnWheatPackTaked(int moneyCount)
+        public void SellItem<T>(int moneyCount)
         {
-            model.SellItem<WheatPackItem>(moneyCount);
-        }
-
-        private void OnDestroy()
-        {
-            ((BoxPlayerInventoryView)playerInventoryViewBox).OnWheatPackSelled -= OnWheatPackTaked;
+            model.SellItem<T>(moneyCount);
         }
     }
 }

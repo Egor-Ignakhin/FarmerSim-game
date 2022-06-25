@@ -25,6 +25,15 @@ namespace FarmerSim.Mud
             }
         }
 
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.TryGetComponent<CharacterController>
+                (out _))
+            {
+                target = null;
+            }
+        }
+
         private void Update()
         {
             if (!target)

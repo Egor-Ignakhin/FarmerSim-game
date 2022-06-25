@@ -7,6 +7,7 @@ namespace FarmerSim.Player
     {
         [SerializeField] private Transform rayStartObject;
         private bool canAttack;
+        [SerializeField] private MeshRenderer meshRenderer;
 
         private void Update()
         {
@@ -17,6 +18,7 @@ namespace FarmerSim.Player
         public void SetCanAttack(bool value)
         {
             canAttack = value;
+            meshRenderer.enabled = canAttack;
         }
 
         private void Attack()

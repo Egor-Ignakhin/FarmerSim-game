@@ -838,6 +838,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boxPlayerInventoryView: {fileID: 1077437206}
   target: {fileID: 97947190}
+  moenyView: {fileID: 1988856289}
+  pPlayerInventoryControllerGM: {fileID: 1677565319}
 --- !u!1001 &227074352
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1798,18 +1800,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 791726907}
     m_Modifications:
-    - target: {fileID: 2620528143294605858, guid: 9ca2af198a6c8544ab8df62c203f56c4, type: 3}
-      propertyPath: m_Convex
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4313008291568824993, guid: 9ca2af198a6c8544ab8df62c203f56c4, type: 3}
       propertyPath: playerInventory
       value: 
       objectReference: {fileID: 1162808175}
-    - target: {fileID: 4313008291568824993, guid: 9ca2af198a6c8544ab8df62c203f56c4, type: 3}
-      propertyPath: playerController
-      value: 
-      objectReference: {fileID: 200479378}
     - target: {fileID: 5366905070813773617, guid: 9ca2af198a6c8544ab8df62c203f56c4, type: 3}
       propertyPath: m_Name
       value: Mud (1)
@@ -2493,6 +2487,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3008297296413678391, guid: cb422acdc199d6e42910f589b81c283b, type: 3}
   m_PrefabInstance: {fileID: 683646504}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &687416378 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3331010114973405846, guid: 41cf25dbb79ca2540b42987c51b7fd6c, type: 3}
+  m_PrefabInstance: {fileID: 3331010116222884724}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &702235308
 GameObject:
   m_ObjectHideFlags: 0
@@ -3614,7 +3619,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -3834,7 +3839,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1162808175, guid: 36c7660a75139cb41babf8f42c6933a9, type: 3}
   m_PrefabInstance: {fileID: 7708214367571354898}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1677565319}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b17ddeddd49463343a0d3e83ef9bf3ca, type: 3}
@@ -4490,6 +4495,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3008297296413678391, guid: cb422acdc199d6e42910f589b81c283b, type: 3}
   m_PrefabInstance: {fileID: 1668982398}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1677565319 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1162808173, guid: 36c7660a75139cb41babf8f42c6933a9, type: 3}
+  m_PrefabInstance: {fileID: 7708214367571354898}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1713628960
 GameObject:
   m_ObjectHideFlags: 0
@@ -4653,6 +4663,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   packsCountText: {fileID: 467996335}
   moneyCountText: {fileID: 1033121887}
+  moneyImg: {fileID: 687416378}
+--- !u!1 &1795071031 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7708214367582649443, guid: 36c7660a75139cb41babf8f42c6933a9, type: 3}
+  m_PrefabInstance: {fileID: 7708214367571354898}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1795071033 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 7708214367582649440, guid: 36c7660a75139cb41babf8f42c6933a9, type: 3}
+  m_PrefabInstance: {fileID: 7708214367571354898}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1895583083
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4811,7 +4832,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -302, y: 0}
+  m_AnchoredPosition: {x: -322, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1957838752
@@ -5562,6 +5583,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 684642919, guid: 36c7660a75139cb41babf8f42c6933a9, type: 3}
+      propertyPath: playerKnifeGM
+      value: 
+      objectReference: {fileID: 1795071031}
     - target: {fileID: 684642920, guid: 36c7660a75139cb41babf8f42c6933a9, type: 3}
       propertyPath: cutWheatButton
       value: 
@@ -5574,6 +5599,10 @@ PrefabInstance:
       propertyPath: playerInventoryController
       value: 
       objectReference: {fileID: 1162808175}
+    - target: {fileID: 1162808173, guid: 36c7660a75139cb41babf8f42c6933a9, type: 3}
+      propertyPath: m_Name
+      value: PlayerInventoryController
+      objectReference: {fileID: 0}
     - target: {fileID: 1162808175, guid: 36c7660a75139cb41babf8f42c6933a9, type: 3}
       propertyPath: playerInventoryViewUIGM
       value: 
@@ -5586,9 +5615,17 @@ PrefabInstance:
       propertyPath: playerInventoryViewGMs.Array.data[1]
       value: 
       objectReference: {fileID: 1781854803}
+    - target: {fileID: 1858098833, guid: 36c7660a75139cb41babf8f42c6933a9, type: 3}
+      propertyPath: meshRenderer
+      value: 
+      objectReference: {fileID: 1795071033}
     - target: {fileID: 7365775665366346370, guid: 36c7660a75139cb41babf8f42c6933a9, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7708214367582649440, guid: 36c7660a75139cb41babf8f42c6933a9, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7886837990483357752, guid: 36c7660a75139cb41babf8f42c6933a9, type: 3}
       propertyPath: m_RootOrder

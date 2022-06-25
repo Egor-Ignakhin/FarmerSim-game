@@ -12,5 +12,8 @@ namespace FarmerSim.Player
         IPlayerBehavior GetLastBehavior();
 
         bool HaveItems<T>();
+
+        IPlayerWeapon GetCurrentWeapon();
+        void SetCurrentWeapon(IPlayerWeapon value);
     }
 }

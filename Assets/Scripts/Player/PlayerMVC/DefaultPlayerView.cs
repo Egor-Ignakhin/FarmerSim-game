@@ -9,10 +9,15 @@ namespace FarmerSim.Player
 
         [SerializeField] private Animator playerAnimator;
 
+        [SerializeField] private GameObject playerKnifeGM;
+        private IPlayerWeapon playerKnife;
+
         public void Initialize(IPlayerModel playerModel)
         {
             this.PlayerModel = playerModel;
             this.PlayerModel.OnPlayerChanged += this.OnPlayerChanged;
+
+            playerKnife = playerKnifeGM.GetComponent<IPlayerWeapon>();
         }
 
         private void OnPlayerChanged()

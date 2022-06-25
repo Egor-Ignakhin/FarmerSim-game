@@ -12,6 +12,7 @@ namespace FarmerSim.Mud
         [SerializeField] private GameObject meshRendGM;
         [SerializeField] private Collider mcollider;
         [SerializeField] private Transform wheatPackInstantiatePlace;
+        [SerializeField] private ParticleSystem mparticleSystem;
 
         private IInventoryController playerInventoryController;
 
@@ -39,6 +40,14 @@ namespace FarmerSim.Mud
             return currentRiseTime < riseTime;
         }
 
+        private void ShowCulture()
+        {
+            meshRendGM.SetActive(true);
+            mcollider.enabled = true;
+
+            cutted = false;
+        }
+
         internal void Cut()
         {
             meshRendGM.SetActive(false);
@@ -49,6 +58,7 @@ namespace FarmerSim.Mud
 
             DropPack();
             DropSlicedWheat();
+            EnableVFX();
         }
 
         private void DropPack()
@@ -64,12 +74,9 @@ namespace FarmerSim.Mud
             slicedWheat.transform.position = wheatPackInstantiatePlace.position;
         }
 
-        private void ShowCulture()
+        private void EnableVFX()
         {
-            meshRendGM.SetActive(true);
-            mcollider.enabled = true;
-
-            cutted = false;
+            mparticleSystem.Play();
         }
     }
 }

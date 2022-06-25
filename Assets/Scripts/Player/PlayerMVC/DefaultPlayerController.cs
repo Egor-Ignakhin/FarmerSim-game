@@ -22,7 +22,6 @@ namespace FarmerSim.Player
         [SerializeField] private Menu.CutWheatButton cutWheatButton;
 
         [SerializeField] private GameObject playerKnifeGM;
-        [SerializeField] private IPlayerWeapon currentWeapon;
 
 
         [SerializeField] private PlayerInventoryController playerInventoryController;
@@ -35,15 +34,13 @@ namespace FarmerSim.Player
             cutWheatButton.OnPointerDownEvent += () =>
             {
                 playerModel.SetCurrentBehavior(new PlayerBehaviorCutting());
-                currentWeapon.SetCanAttack(true);
+                playerModel.SetCurrentWeapon(playerKnifeGM.GetComponent<IPlayerWeapon>());
             };
             cutWheatButton.OnPointerUpEvent += () =>
             {
                 playerModel.SetCurrentBehavior(playerModel.GetLastBehavior());
-                currentWeapon.SetCanAttack(false);
+                playerModel.SetCurrentWeapon(null);
             };
-
-            currentWeapon = playerKnifeGM.GetComponent<IPlayerWeapon>();
         }
 
         private void InitializeMVC()
@@ -103,11 +100,6 @@ namespace FarmerSim.Player
 
             characterController.Move(moveSpeed * Time.deltaTime * movement);
             characterController.Move(velocity);
-        }
-
-        public IPlayerWeapon GetCurrentWeapon()
-        {
-            return currentWeapon;
         }
 
         public bool HaveItems<T>()
