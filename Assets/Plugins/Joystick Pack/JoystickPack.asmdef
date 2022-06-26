@@ -1,12 +1,31 @@
 {
     "name": "Plugins",
     "rootNamespace": "",
-    "references": [],
-    "includePlatforms": [
-        "Android",
-        "Editor"
+    "references": [
+        "GUID:1c66728ad60364b82bf095d383b87458"
     ],
-    "excludePlatforms": [],
+    "includePlatforms": [],
+    "excludePlatforms": [
+        "Android",
+        "CloudRendering",
+        "Editor",
+        "GameCoreScarlett",
+        "GameCoreXboxOne",
+        "iOS",
+        "LinuxStandalone64",
+        "Lumin",
+        "macOSStandalone",
+        "PS4",
+        "PS5",
+        "Stadia",
+        "Switch",
+        "tvOS",
+        "WSA",
+        "WebGL",
+        "WindowsStandalone32",
+        "WindowsStandalone64",
+        "XboxOne"
+    ],
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],

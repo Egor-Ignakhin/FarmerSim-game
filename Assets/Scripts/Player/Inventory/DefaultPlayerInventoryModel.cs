@@ -3,11 +3,10 @@ using FarmerSim.Invnentory;
 using System;
 using System.Collections.Generic;
 
-namespace FarmerSim.Player
+namespace FarmerSim.Player.Inventory
 {
-    public class DefaultPlayerInventoryModel : IInventoryModel
+    public class DefaultPlayerInventoryModel : IPlayerInventoryModel
     {
-
         public event Action InventoryModelChanged;
         private readonly List<IInventoryItem> inventoryItems = new List<IInventoryItem>();
         private int moneyCount;
@@ -15,17 +14,14 @@ namespace FarmerSim.Player
         public void PushItem(IInventoryItem item)
         {
             if (IsNotFilled())
-                AddItem(item);
+            {
+                inventoryItems.Add(item);
+
+                InventoryModelChanged?.Invoke();
+            }
         }
 
-        private void AddItem(IInventoryItem item)
-        {
-            inventoryItems.Add(item);
-
-            InventoryModelChanged?.Invoke();
-        }
-
-        public int GetItemsCountByType<T>()
+        public int GetItemsCount<T>()
         {
             int count = 0;
             foreach (var item in inventoryItems)

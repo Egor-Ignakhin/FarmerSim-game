@@ -6,28 +6,31 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace FarmerSim.Player
+namespace FarmerSim.Player.Inventory
 {
-    public class UIPlayerInventoryView : MonoBehaviour, IInventoryView
+    public class UIPlayerInventoryView : MonoBehaviour, IPlayerInventoryView
     {
         private IInventoryModel playerInventoryModel;
 
         [SerializeField] private TMPro.TextMeshProUGUI packsCountText;
         [SerializeField] private TMPro.TextMeshProUGUI moneyCountText;
-        private int lastMoneyCount;
+
         [SerializeField] private Image moneyImg;
+
+        private int lastMoneyCount;
+
         private bool moneyRoutineRunned;
 
         public void Initialize(IInventoryModel inventoryModel)
         {
-            this.playerInventoryModel = inventoryModel;
+            playerInventoryModel = inventoryModel;
             playerInventoryModel.InventoryModelChanged += OnInventoryModelChanged;
             OnInventoryModelChanged();
         }
 
         private void OnInventoryModelChanged()
         {
-            var packsCount = playerInventoryModel.GetItemsCountByType<WheatPackItem>();
+            var packsCount = playerInventoryModel.GetItemsCount<WheatPackItem>();
             var moneyCount = playerInventoryModel.GetMoneyCount();
 
             if (moneyCount > lastMoneyCount)

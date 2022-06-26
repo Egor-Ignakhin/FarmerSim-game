@@ -1,5 +1,4 @@
-
-using FarmerSim.Invnentory;
+using FarmerSim.Player.Inventory;
 
 using System.Collections.Generic;
 
@@ -7,27 +6,34 @@ using UnityEngine;
 
 namespace FarmerSim.Player
 {
-    public class MoneyAccepter : MonoBehaviour
+    public sealed class MoneyAccepter : MonoBehaviour
     {
-        [SerializeField] private BoxPlayerInventoryView boxPlayerInventoryView;
+        [SerializeField] private GameObject defaultPlayerInventaryControllerGM;
+        private IPlayerInventoryController defaultPlayerInventaryController;
+
         [SerializeField] private Transform target;
-        private List<(RectTransform obj, int cost)> movedMoneys = new List<(RectTransform obj, int cost)>();
+
+        private readonly List<(RectTransform obj, int cost)> movedMoneys = new List<(RectTransform obj, int cost)>();
+
         [SerializeField] private RectTransform moenyView;
 
-        [SerializeField] private GameObject pPlayerInventoryControllerGM;
-        private IInventoryController pPlayerInventoryController;
         private Vector2 normalMoneySizeDelta;
 
         private void Awake()
         {
-            pPlayerInventoryController = pPlayerInventoryControllerGM.GetComponent<IInventoryController>();
+            Initialize();
+        }
 
-            boxPlayerInventoryView.OnWheatPackSelled += OnWheatPackSelled;
+        private void Initialize()
+        {
+            defaultPlayerInventaryController = defaultPlayerInventaryControllerGM.GetComponent<IPlayerInventoryController>();
+
+            defaultPlayerInventaryController.OnItemSold += OnItemSold;
 
             normalMoneySizeDelta = Resources.Load<RectTransform>("Money").sizeDelta;
         }
 
-        private void OnWheatPackSelled(int moneyCount)
+        private void OnItemSold(int moneyCount)
         {
             var money = CreateMoney();
             money.sizeDelta *= 0.5f;
@@ -63,7 +69,6 @@ namespace FarmerSim.Player
 
                 if (moneyObj.position == moenyView.position)
                 {
-                    pPlayerInventoryController.SellItem<WheatPackItem>(movedMoneys[i].cost);
                     Destroy(moneyObj.gameObject);
                     movedMoneys.RemoveAt(i);
                 }
@@ -72,7 +77,7 @@ namespace FarmerSim.Player
 
         private void OnDestroy()
         {
-            boxPlayerInventoryView.OnWheatPackSelled -= OnWheatPackSelled;
+            defaultPlayerInventaryController.OnItemSold -= OnItemSold;
         }
     }
 }

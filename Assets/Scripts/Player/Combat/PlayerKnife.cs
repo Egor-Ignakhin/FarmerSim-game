@@ -1,13 +1,16 @@
 
+using FarmerSim.Mud;
+
 using UnityEngine;
 
 namespace FarmerSim.Player
 {
     public class PlayerKnife : MonoBehaviour, IPlayerWeapon
     {
-        [SerializeField] private Transform rayStartObject;
-        private bool canAttack;
+        [SerializeField] private Transform guideObject;
         [SerializeField] private MeshRenderer meshRenderer;
+
+        private bool canAttack;
 
         private void Update()
         {
@@ -23,28 +26,19 @@ namespace FarmerSim.Player
 
         private void Attack()
         {
-            Ray ray = new Ray(rayStartObject.position, rayStartObject.forward);
+            Ray ray = new Ray(guideObject.position, guideObject.forward);
             if (Physics.Raycast(ray, out RaycastHit hit, 2, ~0))
             {
-                if (hit.transform.TryGetComponent<Mud.WheatObject>(out var wheat)){
-                    wheat.Cut();
+                if (hit.transform.TryGetComponent(out ICrop crop))
+                {
+                    crop.Snip();
                 }
             }
         }
 
         private void OnDrawGizmos()
         {
-            Gizmos.DrawRay(rayStartObject.position, rayStartObject.forward);
-        }
-
-        public Vector3 GetWorldPosition()
-        {
-            return rayStartObject.position;
-        }
-
-        public Vector3 GetWorldDirection()
-        {
-            return rayStartObject.forward;
+            Gizmos.DrawRay(guideObject.position, guideObject.forward);
         }
     }
 }

@@ -6,18 +6,18 @@ namespace FarmerSim.Invnentory
     {
         event Action InventoryModelChanged;
 
-        void PushItem(IInventoryItem item);
-
-        int GetItemsCountByType<IInventoryItem>();
+        int GetItemsCount<IInventoryItem>();
 
         int GetMaxItemsCount();
 
-        bool IsNotFilled();
-
         int GetMoneyCount();
+
+        bool IsNotFilled();
 
         bool HaveItems<T>();
 
         void SellItem<T>(int moneyCount);
+
+        void PushItem(IInventoryItem item);
     }
 }

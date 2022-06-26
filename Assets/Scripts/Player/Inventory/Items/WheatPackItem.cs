@@ -2,7 +2,7 @@ using FarmerSim.Invnentory;
 
 namespace FarmerSim.Player
 {
-    public class WheatPackItem : IInventoryItem
+    internal sealed class WheatPackItem : IInventoryItem
     {
     }
 }

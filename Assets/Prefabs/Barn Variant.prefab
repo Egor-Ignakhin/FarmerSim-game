@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &97947189
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 97947190}
+  m_Layer: 0
+  m_Name: PacksTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &97947190
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 97947189}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.413, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4220867038464228997}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1501227199
 GameObject:
   m_ObjectHideFlags: 0
@@ -9,10 +39,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1501227200}
-  - component: {fileID: 1501227202}
   - component: {fileID: 1501227201}
+  - component: {fileID: 1442898372}
   m_Layer: 0
-  m_Name: BarnAreaChecker
+  m_Name: BarnTriggerHandler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,18 +62,6 @@ Transform:
   m_Father: {fileID: 4220867038464228997}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1501227202
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1501227199}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa4dc63343d42e04db2710d1310d656c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &1501227201
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -57,6 +75,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.25, y: 1, z: 1.25}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1442898372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1501227199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92c37dd02465b5d428baa0f19aec5c93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &220233273008791757
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -148,5 +178,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e93ef238e8260048b4b252446b19816, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mudAreaChecker: {fileID: 1501227202}
+  barnTriggerHandlerGM: {fileID: 1501227199}
   playerController: {fileID: 0}
+  boxPlayerInventoryView: {fileID: 0}
+  packsTarget: {fileID: 97947190}
+  playerCollider: {fileID: 0}
