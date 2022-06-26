@@ -36,7 +36,6 @@ namespace FarmerSim.Player
             {
                 if (wheatPacks[i].activeInHierarchy)
                 {
-                    OnWheatPackSelled?.Invoke(15);
                     return wheatPacks[i];
                 }
             }
@@ -44,6 +43,10 @@ namespace FarmerSim.Player
             return null;
         }
 
+        internal void SellWheatPack()
+        {
+            OnWheatPackSelled?.Invoke(15);
+        }
         private void OnDestroy()
         {
             playerInventoryModel.InventoryModelChanged -= OnInventoryModelChanged;

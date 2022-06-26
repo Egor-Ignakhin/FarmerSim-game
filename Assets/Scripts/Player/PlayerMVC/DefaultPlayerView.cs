@@ -34,6 +34,12 @@ namespace FarmerSim.Player
             bool behaviorIsCutting = playerBehavior is PlayerBehaviorCutting;
 
             playerAnimator.SetBool("IsRunning", behaviorIsRunning);
+            if (behaviorIsRunning)
+            {
+                playerAnimator.SetFloat("RunningMultiplier",
+                    (playerBehavior as PlayerBehaviorRunning).GetDirectionSign());
+            }
+
             playerAnimator.SetBool("IsWalking", behaviorIsWaking);
             playerAnimator.SetBool("IsCutting", behaviorIsCutting);
         }

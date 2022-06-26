@@ -44,7 +44,7 @@ namespace FarmerSim.Mud
 
             transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * 2);
 
-            if (Vector3.Distance(transform.position, target.position) < 0.2f)
+            if (Vector3.Distance(transform.position, target.position) < 0.3f)
             {
                 playerInventory.PushItem(new WheatPackItem());
 

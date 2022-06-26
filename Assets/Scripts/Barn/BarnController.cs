@@ -1,7 +1,6 @@
 
 using FarmerSim.Player;
 
-using System;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -17,7 +16,7 @@ namespace FarmerSim.Barn
 
         private bool canTakeWheat;
 
-        private List<Transform> takedPacks = new List<Transform>();
+        private readonly List<Transform> takedPacks = new List<Transform>();
         [SerializeField] private Transform packsTarget;
 
         private void Awake()
@@ -40,7 +39,7 @@ namespace FarmerSim.Barn
             {
                 TakeWheat();
             }
-            if(takedPacks.Count > 0)
+            if (takedPacks.Count > 0)
             {
                 MoveTakedPacks();
             }
@@ -50,11 +49,10 @@ namespace FarmerSim.Barn
         {
             if (playerController.HaveItems<WheatPackItem>())
             {
-                var pack = boxPlayerInventoryView.GetUpperWheatPack();
-                var packInst = Instantiate(pack).transform;
+                Transform pack = boxPlayerInventoryView.GetUpperWheatPack().transform;
+                var packInst = Instantiate(pack);
                 packInst.gameObject.SetActive(true);
-                packInst.position = pack.transform.position;
-                packInst.rotation = pack.transform.rotation;
+                packInst.SetPositionAndRotation(pack.position, pack.rotation);
 
                 takedPacks.Add(packInst);
             }
@@ -68,10 +66,11 @@ namespace FarmerSim.Barn
                 pack.position = Vector3.MoveTowards(pack.position,
                     packsTarget.position, Time.deltaTime * 10);
 
-                if(pack.position == packsTarget.position)
+                if (pack.position == packsTarget.position)
                 {
                     Destroy(pack.gameObject);
                     takedPacks.RemoveAt(i);
+                    boxPlayerInventoryView.SellWheatPack();
                 }
             }
         }

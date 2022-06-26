@@ -10,12 +10,7 @@ namespace FarmerSim.Player
         [SerializeField] private GameObject playerViewGM;
         private IPlayerView playerView;
 
-        [SerializeField] private JoystickManager joystickManager;
-
-        private Vector3 movement;
-        private Vector3 velocity;
-        private float moveSpeed = 4;
-        private float gravity = 0.5f;
+        [SerializeField] private FloatingJoystick floatingJoystick;
 
         [SerializeField] private CharacterController characterController;
 
@@ -25,7 +20,9 @@ namespace FarmerSim.Player
 
 
         [SerializeField] private PlayerInventoryController playerInventoryController;
-
+        private float _targetRotation = 0.0f;
+        private float _rotationVelocity;
+        public float RotationSmoothTime = 0.12f;
 
         private void Awake()
         {
@@ -61,12 +58,11 @@ namespace FarmerSim.Player
 
         private void OperatePlayerMovement()
         {
-            float horizontal = joystickManager.GetHorizontal();
-            float vertical = joystickManager.GetVertical();
+            Vector2 direction = floatingJoystick.Direction;
 
-            if (vertical == 0)
+            if (direction.y == 0)
             {
-                if (horizontal != 0)
+                if (direction.x != 0)
                 {
                     playerModel.SetCurrentBehavior(new PlayerBehaviorWalking());
                 }
@@ -77,29 +73,22 @@ namespace FarmerSim.Player
             }
             else
             {
-                playerModel.SetCurrentBehavior(new PlayerBehaviorRunning());
+                float runningSpeed = Vector2.Distance(Vector2.zero, direction);
+                playerModel.SetCurrentBehavior(new PlayerBehaviorRunning(runningSpeed));
             }
+
+            RotateCharacter(new Vector3(floatingJoystick.Direction.x, 0, floatingJoystick.Direction.y));
         }
 
-        private void FixedUpdate()
+        public void RotateCharacter(Vector3 direction)
         {
-            float horizontal = joystickManager.GetHorizontal();
-            float vertical = joystickManager.GetVertical();
+            _targetRotation = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg +
+                                  Camera.main.transform.eulerAngles.y;
+            float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity,
+                RotationSmoothTime);
 
-            if (characterController.isGrounded)
-            {
-                velocity.y = 0;
-            }
-            else
-            {
-                velocity.y -= gravity * Time.deltaTime;
-            }
-
-            movement = transform.forward * vertical;
-            transform.Rotate(100 * horizontal * Time.deltaTime * Vector3.up);
-
-            characterController.Move(moveSpeed * Time.deltaTime * movement);
-            characterController.Move(velocity);
+            // rotate to face input direction relative to camera position
+            transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
         }
 
         public bool HaveItems<T>()
