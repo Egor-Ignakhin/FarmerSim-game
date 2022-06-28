@@ -17,6 +17,10 @@ namespace FarmerSim.Mud
 
         [SerializeField] private Collider playerCollider;
 
+        private MudWheatPackPool wheatPackPool;
+        private SlicedGrassPool slicedGrassPool;
+        private SliceVFXPool vfxpool;
+
         private void Awake()
         {
             playerInventoryController = playerInventoryControllerGM.GetComponent<IPlayerInventoryController>();
@@ -27,6 +31,9 @@ namespace FarmerSim.Mud
 
                 crop.OnSnipped += OnCropSnipped;
             }
+            wheatPackPool = new MudWheatPackPool(transform, cropObjects.Count);
+            slicedGrassPool = new SlicedGrassPool(transform, cropObjects.Count);
+            vfxpool = new SliceVFXPool(transform, cropObjects.Count);
         }
 
         private IEnumerator Start()
@@ -51,25 +58,27 @@ namespace FarmerSim.Mud
 
         private void DropPack(ICrop sender)
         {
-            var pack = Instantiate(Resources.Load<WheatCropPack>("InteractableWheatPack"));
+            WheatPackPoolable pack = wheatPackPool.GetObjectFromPool();
             pack.transform.position = sender.GetCropPackInstantiatePosition();
-            pack.Initialize(playerInventoryController, playerCollider);
+            pack.GetComponent<ICropPack>().Initialize(playerInventoryController, playerCollider);
         }
 
         private void DropSlicedWheat(ICrop sender)
         {
-            GameObject slicedWheat = Instantiate(Resources.Load<GameObject>("SlicedGrass"));
+            GameObject slicedWheat = slicedGrassPool.GetObjectFromPool().gameObject;
             slicedWheat.transform.position = sender.GetCropPackInstantiatePosition();
         }
 
         private void EnableVFX(ICrop sender)
         {
-            sender.PlayVFX();
+            VFXPoolable vfx = vfxpool.GetObjectFromPool();
+            vfx.transform.position = sender.GetCropPackInstantiatePosition();
+            vfx.Play();
         }
 
         private void OnDestroy()
         {
-            foreach(ICrop crop in cropObjects)
+            foreach (ICrop crop in cropObjects)
             {
                 crop.OnSnipped -= OnCropSnipped;
             }

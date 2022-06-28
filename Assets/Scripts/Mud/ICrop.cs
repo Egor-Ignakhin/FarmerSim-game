@@ -11,8 +11,6 @@ namespace FarmerSim.Mud
 
         void Grow(float riseDelta);
 
-        void PlayVFX();
-
         void Snip();
 
         Vector3 GetCropPackInstantiatePosition();

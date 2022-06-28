@@ -63,7 +63,7 @@ namespace FarmerSim.Mud
         {
             playerInventory.PushItem(new WheatPackItem());
 
-            Destroy(gameObject);
+            GetComponent<WheatPackPoolable>().Realize();
         }
 
         private void Move()

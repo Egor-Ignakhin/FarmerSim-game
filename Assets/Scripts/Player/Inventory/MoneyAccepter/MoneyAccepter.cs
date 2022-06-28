@@ -13,11 +13,15 @@ namespace FarmerSim.Player
 
         [SerializeField] private Transform target;
 
-        private readonly List<(RectTransform obj, int cost)> movedMoneys = new List<(RectTransform obj, int cost)>();
+        private readonly List<MoneyPoolable> movedMoneys = new List<MoneyPoolable>();
 
-        [SerializeField] private RectTransform moenyView;
+        [SerializeField] private RectTransform moneyView;
 
-        private Vector2 normalMoneySizeDelta;
+        private RectTransform moneyInstance;
+
+        private ObjectPool<MoneyPoolable> moneyPool;
+
+        [SerializeField] private int moneysCount = 30;
 
         private void Awake()
         {
@@ -30,21 +34,19 @@ namespace FarmerSim.Player
 
             defaultPlayerInventaryController.OnItemSold += OnItemSold;
 
-            normalMoneySizeDelta = Resources.Load<RectTransform>("Money").sizeDelta;
+            moneyPool = new MoneyPool(transform, moneysCount);
+
+            moneyInstance = Resources.Load<RectTransform>("Money");
         }
 
-        private void OnItemSold(int moneyCount)
+        private void OnItemSold(int _)
         {
-            var money = CreateMoney();
-            money.sizeDelta *= 0.5f;
+            MoneyPoolable moneyPoolable = moneyPool.GetObjectFromPool();
+            RectTransform moneyRT = moneyPoolable.transform as RectTransform;
+            moneyRT.sizeDelta *= 0.5f;
 
-            money.position = Camera.main.WorldToScreenPoint(target.position);
-            movedMoneys.Add((money, moneyCount));
-        }
-
-        private RectTransform CreateMoney()
-        {
-            return Instantiate(Resources.Load<RectTransform>("Money"), transform.parent);
+            moneyRT.position = Camera.main.WorldToScreenPoint(target.position);
+            movedMoneys.Add(moneyPoolable);
         }
 
         private void Update()
@@ -59,17 +61,17 @@ namespace FarmerSim.Player
         {
             for (int i = 0; i < movedMoneys.Count; i++)
             {
-                RectTransform moneyObj = movedMoneys[i].obj;
+                RectTransform moneyObj = movedMoneys[i].GetRectTransform();
 
                 moneyObj.position = Vector2.MoveTowards(moneyObj.position,
-                    moenyView.position, Time.deltaTime * 2000);
+                    moneyView.position, Time.deltaTime * 2000);
 
                 moneyObj.sizeDelta = Vector3.MoveTowards(moneyObj.sizeDelta,
-                    normalMoneySizeDelta, Time.deltaTime * 100);
+                    moneyInstance.sizeDelta, Time.deltaTime * 100);
 
-                if (moneyObj.position == moenyView.position)
+                if (moneyObj.position == moneyView.position)
                 {
-                    Destroy(moneyObj.gameObject);
+                    moneyPool.ReturnToPool(movedMoneys[i]);
                     movedMoneys.RemoveAt(i);
                 }
             }

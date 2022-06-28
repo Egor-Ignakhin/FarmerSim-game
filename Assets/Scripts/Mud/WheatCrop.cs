@@ -14,7 +14,6 @@ namespace FarmerSim.Mud
         [SerializeField] private GameObject meshRendGM;
         [SerializeField] private Collider mcollider;
         [SerializeField] private Transform wheatPackInstantiatePlace;
-        [SerializeField] private ParticleSystem mparticleSystem;
 
         public void Grow(float riseDelta)
         {
@@ -57,11 +56,6 @@ namespace FarmerSim.Mud
         public Vector3 GetCropPackInstantiatePosition()
         {
             return wheatPackInstantiatePlace.position;
-        }
-
-        public void PlayVFX()
-        {
-            mparticleSystem.Play();
         }
     }
 }

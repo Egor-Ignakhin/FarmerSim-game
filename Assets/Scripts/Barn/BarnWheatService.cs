@@ -21,10 +21,15 @@ namespace FarmerSim.Barn
         [SerializeField] private GameObject standardPlayerBackpackGM;
         private IPlayerBackpack standardPlayerBackpack;
 
+        [SerializeField] private Transform wheatPoolParent;
+        private BarnWheatPool wheatPool;
+
         internal void Initialize()
         {
             standardPlayerBackpack = standardPlayerBackpackGM.GetComponent<IPlayerBackpack>();
             defaultPlayerInventaryController = defaultPlayerInventaryControllerGM.GetComponent<IPlayerInventoryController>();
+
+            wheatPool = new BarnWheatPool(wheatPoolParent, 30);
         }
 
         internal void Update()
@@ -44,8 +49,8 @@ namespace FarmerSim.Barn
             if (defaultPlayerInventaryController.HaveItems<WheatPackItem>())
             {
                 Transform pack = standardPlayerBackpack.GetItem<WheatPackItem>();
-                Transform packInst = UnityEngine.Object.Instantiate(pack);
-                packInst.gameObject.SetActive(true);
+
+                Transform packInst = wheatPool.GetObjectFromPool().transform;
                 packInst.SetPositionAndRotation(pack.position, pack.rotation);
 
                 takedPacks.Add(packInst);
@@ -62,7 +67,7 @@ namespace FarmerSim.Barn
 
                 if (pack.position == packsTarget.position)
                 {
-                    UnityEngine.Object.Destroy(pack.gameObject);
+                    wheatPool.ReturnToPool(pack.GetComponent<WheatPackPoolable>());
                     takedPacks.RemoveAt(i);
                     defaultPlayerInventaryController.SellItem<WheatPackItem>(15);
                 }
